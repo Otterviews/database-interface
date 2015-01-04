@@ -11,6 +11,7 @@ public class DatabaseActorPool {
 
     private DatabaseActorPool() {
         databaseActors = new ArrayList<>();
+
     }
 
     public static void registerActor(Props actorProps) {
