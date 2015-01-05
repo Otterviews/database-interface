@@ -15,8 +15,8 @@
          (tv/create! data))
        (catch Exception e)))
 
-(def titan-write (actor
-                   (onReceive [post-json]
-                              (->> post-json
-                                   (#(j/parse-string % true))
-                                   (persist-to-titan)))))
+(def titan (actor
+             (onReceive [post-json]
+                        (->> post-json
+                             (#(j/parse-string % true))
+                             (persist-to-titan)))))

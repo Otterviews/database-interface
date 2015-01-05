@@ -1,24 +1,21 @@
-package pool;
-
+import akka.actor.ActorSystem;
 import akka.actor.Props;
-
-import java.util.ArrayList;
-import java.util.List;
+import clojure.java.api.Clojure;
 
 public class DatabaseActorPool {
     private static DatabaseActorPool databaseActorPool = new DatabaseActorPool();
-    private final List<Props> databaseActors;
+
+    private static ActorSystem databaseActorSystem;
 
     private DatabaseActorPool() {
-        databaseActors = new ArrayList<>();
-
+        databaseActorSystem = ActorSystem.create("database");
     }
 
-    public static void registerActor(Props actorProps) {
-        databaseActorPool.databaseActors.add(actorProps);
+    private static void registerTitan() {
+        databaseActorSystem.actorOf((Props) Clojure.var("titan-interface.core", "titan").invoke(), "Titan");
     }
 
-    public static List<Props> getAllActors() {
-        return databaseActorPool.databaseActors;
+    public ActorSystem getDatabaseActorSystem() {
+        return databaseActorSystem;
     }
 }
